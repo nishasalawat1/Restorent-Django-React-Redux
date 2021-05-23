@@ -14,6 +14,7 @@ class Login extends Component {
             localStorage.setItem('token', result.token);
             this.props.history.push('list')
         }).catch((err) => {
+            console.log(err)
             alert("Invalid username or password");  
         });
     }
