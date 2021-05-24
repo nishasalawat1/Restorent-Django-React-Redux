@@ -1,10 +1,4 @@
 import { LOGIN, LOGIN_API_BEGIN, LOGIN_API_SUCCESS, LOGIN_API_FAILURE } from "../Constant";
-
-// import {
-//     FETCH_PRODUCTS_BEGIN,
-//     FETCH_PRODUCTS_SUCCESS,
-//     FETCH_PRODUCTS_FAILURE
-//   } from '../Action/action';
   
   const initialState = {
     loginData: null,
@@ -12,22 +6,7 @@ import { LOGIN, LOGIN_API_BEGIN, LOGIN_API_SUCCESS, LOGIN_API_FAILURE } from "..
     error: null
   };
 
-// export default function loginProcess(state=[],action){
-//     switch(action.type){
-//         case LOGIN:
-//             console.log("Reducer",action.data)
-//             return [
-//                 ...state,
-//                 {loginData:action.data}
-//             ]
-//             break;
-//         default:
-//             return state
-//     }
-// }
-
 export default function loginProcess(state = initialState, action) {
-    debugger
     switch(action.type) {
       case LOGIN_API_BEGIN:
         return {
