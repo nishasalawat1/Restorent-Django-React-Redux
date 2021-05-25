@@ -1,23 +1,9 @@
-import { LOGIN, LOGIN_API_BEGIN, LOGIN_API_SUCCESS, LOGIN_API_FAILURE } from "../Constant";
-
-
-export const LoginApIBegin = () => ({
-    type: LOGIN_API_BEGIN
-});
-
-export const LoginApISuccess = login_response => ({
-    type: LOGIN_API_SUCCESS,
-    payload: login_response 
-});
-
-export const LoginApIFailure = error => ({
-    type: LOGIN_API_FAILURE,
-    payload: error 
-});
+import { ApIBegin, ApIFailure, ApISuccess } from "../Action/actionCreators";
+import { LOGIN_API_BEGIN, LOGIN_API_SUCCESS, LOGIN_API_FAILURE, Types } from "../Constant";
 
 export const login = (login_form_data) => {
     return dispatch => {
-        dispatch(LoginApIBegin());
+        dispatch(ApIBegin(LOGIN_API_BEGIN));
         return fetch('http://localhost:8000/token-auth/', {
             method: 'POST',
             headers: {
@@ -27,11 +13,61 @@ export const login = (login_form_data) => {
         }).then(handleErrors)
             .then(res => res.json())
             .then(json => {
-                dispatch(LoginApISuccess(json));
+                dispatch(ApISuccess(LOGIN_API_SUCCESS, json));
                 return json
             })
-            .catch(error => dispatch(LoginApIFailure(error)));
+            .catch(error => dispatch(ApIFailure(LOGIN_API_FAILURE, error)));
     };
+}
+
+export const createResto = (form_data) => {
+    return dispatch => {
+        dispatch(ApIBegin(Types.RESTORENT_API_LOADING));
+        return fetch('http://localhost:8000/api/resto/', {
+            method: 'Post',
+            body: JSON.stringify(form_data),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(handleErrors).then(
+            (response) => response.json().then(
+                    (result) => {
+                        dispatch(ApISuccess(Types.ADD_RESTORENT,result))
+                        return result
+                    }).catch(error => dispatch(ApIFailure(Types.RESTORENT_API_ERROR,error)))
+            )
+    };
+}
+
+export const restoListAction = (data) => {
+    return dispatch => {
+        dispatch(ApIBegin(Types.RESTORENT_API_LOADING));
+        return fetch('http://localhost:8000/api/resto/').then(handleErrors).
+        then((response) => response.json().then((result) => {
+                dispatch(ApISuccess(Types.GET_RESTORENT_LIST,result))
+                return result
+            }).catch(
+                error => dispatch(ApIFailure(Types.RESTORENT_API_ERROR,console,error))
+            )
+        )
+    }
+}
+
+export const restoUpdateAction = (form_data) => {
+    return dispatch => {
+        dispatch(ApIBegin(Types.RESTORENT_API_LOADING));
+        return fetch('http://localhost:8000/api/resto/'+form_data.id+'/', {
+            method: 'Put',
+            body: JSON.stringify(form_data),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(
+            response => response.json().then(
+            (result) => {
+                dispatch(ApISuccess(Types.UPDATE_RESTORENT,result))
+                return result
+            }).catch(
+                error => dispatch(ApIFailure(Types.RESTORENT_API_ERROR,error))
+            )
+        )
+    }
 }
 
 // Handle HTTP errors since fetch won't.

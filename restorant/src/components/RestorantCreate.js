@@ -14,20 +14,17 @@ class RestorantCreate extends Component {
 
     }
     create() {
-        fetch('http://localhost:8000/api/resto/', {
-            method: 'Post',
-            body: JSON.stringify(this.state),
-            headers: { 'Content-Type': 'application/json' }
-        }).then(
-            (response) => {
-                response.json().then(
-                    (result) => {
-                        alert("Record added successfully!")
-                    })
-            })
+        this.props.createRestoHandler(this.state).then((result)=>{
+            if(result.id){
+                this.props.history.push('list');
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
     }
     render() {
         console.warn('render called')
+        console.log(this.props)
         return (
             <div>
                 <CustomNavbar />

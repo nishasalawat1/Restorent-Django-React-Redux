@@ -2,7 +2,7 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 import { Table, tbody, thead, th, tr, td } from 'react-bootstrap';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CustomNavbar from './Navbar';
 
 
@@ -14,12 +14,10 @@ class RestorantList extends Component {
         }
     }
     getData(){
-        fetch('http://localhost:8000/api/resto/').then((response) => {
-            response.json().then((result) => {
-                this.setState({
+        this.props.restorentListHandler().then((result)=>{
+            this.setState({
                     list: result,
-                })
-            })
+                }) 
         })
     }
     delete(id)
