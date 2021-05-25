@@ -1,6 +1,7 @@
 import {combineReducers} from "redux";
-import loginProcess from "./reducer";
+import loginProcess, { restorentReducer } from "./reducer";
 
 export default combineReducers({
     loginProcess,
+   restorentReducer,
 })

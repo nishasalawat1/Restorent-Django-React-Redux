@@ -1,14 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import RestorantCreate from './components/RestorantCreate';
-import RestorantUpdate from './components/RestorantUpdate';
+import RestorantCreate from './Containers/RestorantCreateContainer';
+import RestorantUpdate from './Containers/RestorantUpdateContainer';
 import RestorantDelete from './components/RestorantDelete';
 import RestorantDetail from './components/RestorantDetail';
-import RestorantList from './components/RestorantList';
+import RestorantList from './Containers/RestorantListContainer';
 import RestorantSearch from './components/RestorantSearch';
 import Home from './components/Home';
-// import Login from './components/Login';
 import Login from './Containers/LoginContainer';
 import Logout from './components/Logout';
 import ProtectedRoute from './components/ProtectedRoute';

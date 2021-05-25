@@ -10,38 +10,32 @@ class RestorantUpdate extends Component {
             email: "",
             address: "",
             rating: "",
-            id:null,
+            id: null,
         }
 
     }
-    componentDidMount(){
-        fetch('http://localhost:8000/api/resto/'+this.props.match.params.id).then((response) => {
+    componentDidMount() {
+        fetch('http://localhost:8000/api/resto/' + this.props.match.params.id).then((response) => {
             response.json().then((result) => {
                 this.setState({
                     name: result.name,
-                    address:result.address,
-                    rating:result.rating,
-                    id:result.id,
-                    email:result.email,
+                    address: result.address,
+                    rating: result.rating,
+                    id: result.id,
+                    email: result.email,
                 })
             })
         })
     }
     update() {
-        fetch('http://localhost:8000/api/resto/'+this.state.id+'/', {
-            method: 'Put',
-            body: JSON.stringify(this.state),
-            headers: { 'Content-Type': 'application/json' }
-        }).then(
+        this.props.restoUpdatedHandler(this.state).then(
             (response) => {
-                response.json().then(
-                    (result) => {
-                        alert("Component Updated successfully!")
-                    })
-            })
+                if (response.id) {
+                    this.props.history.push('/list');
+                }
+            }).catch((error) => { console.log(error) })
     }
     render() {
-        console.warn(this.props.match.params.id)
         return (
             <div>
                 <CustomNavbar />
@@ -49,27 +43,27 @@ class RestorantUpdate extends Component {
                 <input
                     name="name"
                     onChange={(event) => this.setState({ name: event.target.value })}
-                    placeholder="Restorant Name" 
+                    placeholder="Restorant Name"
                     value={this.state.name}
-                    /><br /><br />
+                /><br /><br />
                 <input
                     name="email"
                     onChange={(event) => this.setState({ email: event.target.value })}
-                    placeholder="Restorant Email" 
+                    placeholder="Restorant Email"
                     value={this.state.email}
-                    /><br /><br />
+                /><br /><br />
                 <input
                     name="address"
                     onChange={(event) => this.setState({ address: event.target.value })}
-                    placeholder="Restorant Address" 
+                    placeholder="Restorant Address"
                     value={this.state.address}
-                    /><br /><br />
+                /><br /><br />
                 <input
                     name="rating"
                     onChange={(event) => this.setState({ rating: event.target.value })}
-                    placeholder="Restorant Rating" 
+                    placeholder="Restorant Rating"
                     value={this.state.rating}
-                    /><br /><br />
+                /><br /><br />
                 <Button variant="info" onClick={() => this.update()}>Update Restorant</Button>
             </div>
         );
