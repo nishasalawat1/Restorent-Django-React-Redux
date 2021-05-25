@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/restorant/node_modules
 
 # testing
 /coverage
@@ -48,5 +49,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# database
+/db.sqlite3
 
 
